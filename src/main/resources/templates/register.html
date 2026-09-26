@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CarePoint | Create Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family: "DM Sans", sans-serif;
+
+            background:
+                radial-gradient(circle at 15% 20%, #e3f2ff, transparent 35%),
+                radial-gradient(circle at 90% 80%, #dff1ff, transparent 35%),
+                #f5faff;
+
+            color: #102a43;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 45px 20px;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1050px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-family: "Manrope";
+            font-weight: 800;
+            font-size: 22px;
+
+            color: #1266f1;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #1266f1;
+            color: white;
+        }
+
+        .back {
+            color: #667d91;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back:hover {
+            color: #1266f1;
+        }
+
+        .card {
+            display: grid;
+            grid-template-columns: .8fr 1.2fr;
+
+            background: white;
+
+            border: 1px solid #e1edf6;
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            box-shadow: 0 25px 70px rgba(30,90,140,.10);
+        }
+
+        .side {
+            padding: 55px 45px;
+
+            background: linear-gradient(145deg,#1266f1,#248fe8);
+
+            color: white;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .side::after {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            border-radius: 50%;
+
+            right: -100px;
+            bottom: -80px;
+
+            background: rgba(255,255,255,.08);
+        }
+
+        .side-icon {
+            width: 60px;
+            height: 60px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,.15);
+
+            font-size: 25px;
+
+            margin-bottom: 35px;
+        }
+
+        .side h1 {
+            font-family: "Manrope";
+            font-size: 38px;
+            line-height: 1.15;
+        }
+
+        .side p {
+            margin-top: 18px;
+
+            line-height: 1.7;
+
+            color: rgba(255,255,255,.82);
+        }
+
+        .benefits {
+            margin-top: 45px;
+        }
+
+        .benefit {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+
+            margin: 18px 0;
+
+            font-size: 14px;
+        }
+
+        .benefit i {
+            color: white;
+        }
+
+        .form-area {
+            padding: 50px;
+        }
+
+        .form-area h2 {
+            font-family: "Manrope";
+            font-size: 29px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #788b9b;
+            font-size: 14px;
+        }
+
+        form {
+            margin-top: 32px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 17px;
+        }
+
+        .group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: #435c70;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box i {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #8ba0b0;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            border: 1px solid #d9e5ee;
+            border-radius: 11px;
+
+            padding: 13px 14px 13px 43px;
+
+            outline: none;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            color: #18344b;
+            background: #fbfdff;
+
+            transition: .2s;
+        }
+
+        textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #1266f1;
+
+            box-shadow: 0 0 0 4px rgba(18,102,241,.08);
+
+            background: white;
+        }
+
+        .gender {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+        }
+
+        .gender label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .gender input {
+            display: none;
+        }
+
+        .gender span {
+            display: block;
+
+            padding: 12px;
+
+            text-align: center;
+
+            border: 1px solid #d9e5ee;
+            border-radius: 10px;
+
+            color: #687e90;
+
+            transition: .2s;
+        }
+
+        .gender input:checked + span {
+            background: #eaf3ff;
+            color: #1266f1;
+            border-color: #1266f1;
+            font-weight: 700;
+        }
+
+        .terms {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            margin: 5px 0 22px;
+
+            color: #718597;
+            font-size: 13px;
+        }
+
+        .terms input {
+            width: 16px;
+            height: 16px;
+            accent-color: #1266f1;
+        }
+
+        .submit {
+            width: 100%;
+
+            border: none;
+            border-radius: 12px;
+
+            padding: 15px;
+
+            background: #1266f1;
+            color: white;
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow: 0 10px 25px rgba(18,102,241,.20);
+
+            transition: .25s;
+        }
+
+        .submit:hover {
+            transform: translateY(-2px);
+            background: #0d5bd9;
+        }
+
+        .login {
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #778a9a;
+            font-size: 14px;
+        }
+
+        .login a {
+            color: #1266f1;
+            font-weight: 700;
+        }
+
+        @media(max-width:800px) {
+
+            .card {
+                grid-template-columns: 1fr;
+            }
+
+            .side {
+                padding: 35px;
+            }
+
+            .benefits {
+                margin-top: 25px;
+            }
+
+            .form-area {
+                padding: 35px;
+            }
+        }
+
+        @media(max-width:550px) {
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-area {
+                padding: 28px 22px;
+            }
+
+            .side {
+                padding: 30px 25px;
+            }
+
+            .side h1 {
+                font-size: 30px;
+            }
+
+            .gender {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="top">
+
+        <a th:href="@{/}" class="logo">
+
+            <span class="logo-icon">
+                <i class="fa-solid fa-plus"></i>
+            </span>
+
+            CarePoint
+
+        </a>
+
+        <a th:href="@{/}" class="back">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="side">
+
+            <div class="side-icon">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+
+            <h1>
+                Your health,
+                your journey.
+            </h1>
+
+            <p>
+                Create your CarePoint account and make
+                managing your doctor appointments easier.
+            </p>
+
+
+            <div class="benefits">
+
+                <div class="benefit">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Easy appointment booking
+                </div>
+
+                <div class="benefit">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Convenient scheduling
+                </div>
+
+                <div class="benefit">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Simple patient management
+                </div>
+
+                <div class="benefit">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Modern healthcare experience
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-area">
+
+            <h2>Create your account</h2>
+
+            <p class="subtitle">
+                Enter your information to get started with CarePoint.
+            </p>
+
+
+            <form id="registerForm"
+                  th:action="@{/register}"
+                  action="/register"
+                  method="post">
+
+
+                <div class="row">
+
+                    <div class="group">
+
+                        <label for="name">Full Name</label>
+
+                        <div class="input-box">
+
+                            <i class="fa-regular fa-user"></i>
+
+                            <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Enter your full name"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="group">
+
+                        <label for="email">Email Address</label>
+
+                        <div class="input-box">
+
+                            <i class="fa-regular fa-envelope"></i>
+
+                            <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="you@example.com"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="group">
+
+                        <label for="phone">Phone Number</label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-phone"></i>
+
+                            <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="10 digit phone number"
+                                    pattern="[0-9]{10}"
+                                    maxlength="10"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="group">
+
+                        <label for="dob">Date of Birth</label>
+
+                        <div class="input-box">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            <input
+                                    type="date"
+                                    id="dob"
+                                    name="dateOfBirth"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="group">
+
+                    <label>Gender</label>
+
+                    <div class="gender">
+
+                        <label>
+                            <input type="radio"
+                                   name="gender"
+                                   value="Male"
+                                   required>
+
+                            <span>Male</span>
+                        </label>
+
+                        <label>
+                            <input type="radio"
+                                   name="gender"
+                                   value="Female">
+
+                            <span>Female</span>
+                        </label>
+
+                        <label>
+                            <input type="radio"
+                                   name="gender"
+                                   value="Other">
+
+                            <span>Other</span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <div class="group">
+
+                    <label for="address">Address</label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <textarea
+                                id="address"
+                                name="address"
+                                placeholder="Enter your address"
+                                required></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="group">
+
+                        <label for="password">Password</label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Create a password"
+                                    minlength="6"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    placeholder="Confirm password"
+                                    minlength="6"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="terms">
+
+                    <input type="checkbox"
+                           id="terms"
+                           required>
+
+                    <label for="terms">
+                        I agree to the terms and conditions.
+                    </label>
+
+                </div>
+
+
+                <button class="submit" type="submit">
+
+                    Create Account
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+                <p class="login">
+
+                    Already have an account?
+
+                    <a th:href="@{/login}">
+                        Login
+                    </a>
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

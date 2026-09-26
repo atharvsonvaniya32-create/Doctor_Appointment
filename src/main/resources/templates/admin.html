@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | CarePoint</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">+</div>
+
+            <div>
+                <h2>CarePoint</h2>
+                <span>ADMIN PANEL</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="#dashboard" class="nav-item active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="#appointments" class="nav-item">
+                <span>◷</span>
+                Appointments
+            </a>
+
+            <a href="#patients" class="nav-item">
+                <span>♙</span>
+                Patients
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="admin-profile">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Dashboard</h1>
+
+                <p>
+                    Manage your patients and appointments
+                </p>
+
+            </div>
+
+            <div class="top-date">
+
+                <span>Today</span>
+
+                <strong id="currentDate"></strong>
+
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+
+        <section id="dashboard" class="statistics">
+
+            <div class="stat-card">
+
+                <div class="stat-icon patients-icon">
+                    ♙
+                </div>
+
+                <div>
+                    <span>Total Patients</span>
+
+                    <h2 th:text="${totalPatients}">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon appointment-icon">
+                    ◷
+                </div>
+
+                <div>
+                    <span>Total Appointments</span>
+
+                    <h2 th:text="${totalAppointments}">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon pending-icon">
+                    !
+                </div>
+
+                <div>
+                    <span>Pending</span>
+
+                    <h2 th:text="${pendingAppointments}">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon confirmed-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Confirmed</span>
+
+                    <h2 th:text="${confirmedAppointments}">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon cancelled-icon">
+                    ×
+                </div>
+
+                <div>
+                    <span>Cancelled</span>
+
+                    <h2 th:text="${cancelledAppointments}">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- APPOINTMENTS -->
+
+        <section id="appointments" class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>Appointments</h2>
+
+                    <p>
+                        Manage all patient appointments
+                    </p>
+
+                </div>
+
+                <div class="search-box">
+
+                    <input
+                            type="text"
+                            id="appointmentSearch"
+                            placeholder="Search appointments...">
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table id="appointmentTable">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Patient</th>
+
+                        <th>Contact</th>
+
+                        <th>Doctor</th>
+
+                        <th>Date</th>
+
+                        <th>Time</th>
+
+                        <th>Type</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="appointment : ${appointments}">
+
+                        <td>
+
+                            <div class="patient-name">
+
+                                <div class="small-avatar"
+                                     th:text="${#strings.substring(appointment.name,0,1)}">
+                                    A
+                                </div>
+
+                                <strong
+                                        th:text="${appointment.name}">
+                                    Patient
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact">
+
+                                <span
+                                        th:text="${appointment.email}">
+                                    email
+                                </span>
+
+                                <small
+                                        th:text="${appointment.phone}">
+                                    phone
+                                </small>
+
+                            </div>
+
+                        </td>
+
+
+                        <td th:text="${appointment.doctor}">
+                            Doctor
+                        </td>
+
+
+                        <td th:text="${appointment.date}">
+                            Date
+                        </td>
+
+
+                        <td th:text="${appointment.time}">
+                            Time
+                        </td>
+
+
+                        <td>
+
+                            <span class="type-badge"
+                                  th:text="${appointment.appointmentType}">
+                                In-Person
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="status"
+                                    th:classappend="${appointment.status == 'CONFIRMED'} ? ' confirmed' :
+                                                    (${appointment.status == 'CANCELLED'} ? ' cancelled' : ' pending')"
+                                    th:text="${appointment.status}">
+                                PENDING
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="actions">
+
+                                <form
+                                        th:if="${appointment.status != 'CONFIRMED'}"
+                                        th:action="@{/admin/appointment/{id}/confirm(id=${appointment.id})}"
+                                        method="post">
+
+                                    <button
+                                            class="action-btn confirm"
+                                            type="submit"
+                                            title="Confirm">
+                                        ✓
+                                    </button>
+
+                                </form>
+
+
+                                <form
+                                        th:if="${appointment.status != 'CANCELLED'}"
+                                        th:action="@{/admin/appointment/{id}/cancel(id=${appointment.id})}"
+                                        method="post">
+
+                                    <button
+                                            class="action-btn cancel"
+                                            type="submit"
+                                            title="Cancel">
+                                        ×
+                                    </button>
+
+                                </form>
+
+
+                                <form
+                                        th:action="@{/admin/appointment/{id}/delete(id=${appointment.id})}"
+                                        method="post"
+                                        onsubmit="return confirm('Delete this appointment?');">
+
+                                    <button
+                                            class="action-btn delete"
+                                            type="submit"
+                                            title="Delete">
+                                        🗑
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr th:if="${#lists.isEmpty(appointments)}">
+
+                        <td colspan="8" class="empty">
+
+                            No appointments found.
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- PATIENTS -->
+
+        <section id="patients" class="panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>Registered Patients</h2>
+
+                    <p>
+                        Complete patient registration information
+                    </p>
+
+                </div>
+
+                <div class="search-box">
+
+                    <input
+                            type="text"
+                            id="patientSearch"
+                            placeholder="Search patients...">
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table id="patientTable">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Patient</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Date of Birth</th>
+
+                        <th>Gender</th>
+
+                        <th>Address</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="patient : ${patients}">
+
+                        <td>
+
+                            <div class="patient-name">
+
+                                <div class="small-avatar"
+                                     th:text="${#strings.substring(patient.name,0,1)}">
+                                    A
+                                </div>
+
+                                <strong
+                                        th:text="${patient.name}">
+                                    Patient
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+
+                        <td th:text="${patient.email}">
+                            email
+                        </td>
+
+
+                        <td th:text="${patient.phone}">
+                            phone
+                        </td>
+
+
+                        <td th:text="${patient.dateOfBirth}">
+                            DOB
+                        </td>
+
+
+                        <td th:text="${patient.gender}">
+                            Gender
+                        </td>
+
+
+                        <td class="address"
+                            th:text="${patient.address}">
+                            Address
+                        </td>
+
+
+                        <td>
+
+                            <form
+                                    th:action="@{/admin/patient/{id}/delete(id=${patient.id})}"
+                                    method="post"
+                                    onsubmit="return confirm('Delete this patient?');">
+
+                                <button
+                                        class="action-btn delete"
+                                        type="submit">
+                                    🗑
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr th:if="${#lists.isEmpty(patients)}">
+
+                        <td colspan="7" class="empty">
+
+                            No registered patients found.
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+
+            CarePoint Admin Dashboard
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script th:src="@{/js/admin.js}"></script>
+
+</body>
+
+</html>
